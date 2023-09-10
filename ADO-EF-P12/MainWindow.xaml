@@ -59,6 +59,10 @@
                         Click="Button9_Click"/>
                 <Button Content="10" x:Name="Button10"
                         Click="Button10_Click"/>
+                <Button Content="11" x:Name="Button11"
+                        Click="Button11_Click"/>
+                <Button Content="12" x:Name="Button12"
+                        Click="Button12_Click"/>
                 <Button Content="Nav1" x:Name="ButtonNav1"
                         Click="ButtonNav1_Click"/>
                 <Button Content="Nav2" x:Name="ButtonNav2"

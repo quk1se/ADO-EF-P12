@@ -476,6 +476,45 @@ namespace ADO_EF_P12
         {
 
         }
+
+        private void Button12_Click(object sender, RoutedEventArgs e)
+        {
+           var query = dataContext
+                .Departments
+                .GroupJoin(
+                    dataContext.Managers,
+                    d => d.Id,
+                    m => m.IdSecDep,
+                    (d, m) => new Pair { Key = d.Name, Value = m.Count().ToString() }
+                )
+                .OrderByDescending(pair => Convert.ToInt32(pair.Value));
+
+            Pairs.Clear();
+            foreach (var pair in query)
+            {
+                Pairs.Add(pair);
+            }
+        }
+
+        private void Button11_Click(object sender, RoutedEventArgs e)
+        {
+            var query = dataContext
+                .Managers
+                .GroupJoin(
+                    dataContext.Managers,
+                    chief => chief.Id,
+                    m => m.IdChief,
+                    (chief, m) => new Pair { Key = m.Count().ToString(), Value = $"{chief.Surname} {chief.Name[0]}.{chief.Secname[0]}." }
+                )
+                .OrderByDescending(pair => Convert.ToInt32(pair.Key))
+                .Take(3);
+
+            Pairs.Clear();
+            foreach (var pair in query)
+            {
+                Pairs.Add(pair);
+            }
+        }
         /* Д.З. Засобами LINQ на основі створеної БД реалізувати запити
 * Назва відділу -- кількість сумісників (SecDep)
 * Запит з однофамільцями переробити з нумерацією
