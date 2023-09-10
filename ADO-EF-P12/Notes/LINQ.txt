@@ -1,0 +1,27 @@
+﻿LINQ - Language Integrated Queries
+Запити даних мовою програмування (C#)
+
+Є різновиди LINQ для колекцій (IEnumerable) та Entity (IQueryable)
+
+Усі інструкції, які належать до IQueryable, слугують для підготовки запиту SQL
+Наприклад, інструкція
+var query = 
+    dataContext         
+        .Departments         
+        .OrderBy(d => d.Name)
+НЕ посилає запит до БД
+лише збирає інструкції для побудови запиту
+SELECT * FROM Departments d ORDER BY d.Name
+
+Сам запит виконується при зверненні до змінної query у циклі чи агрегаторі, тощо
+
+Інструкція .AsEnumerable() відмежовує частину, яка впливає на SQL,
+та решту, яка буде працювати з колекцією (з боку .NET)
+
+query.Select(d => d.Name) - додаток до SQL, який змінить запит
+SELECT d.Name FROM Departments d ORDER BY d.Name
+
+query.AsEnumerable().Select(d => d.Name) - "розділення", запит залишається
+SELECT * FROM Departments d ORDER BY d.Name,
+він виконується, а потім з його результатів перебиранням формується вибірка 
+Select(d => d.Name) - колекція рядків-назв відділів
